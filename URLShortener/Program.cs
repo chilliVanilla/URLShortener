@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddSingleton<ICodeGenerator, CodeGenerator>();
+builder.Services.AddScoped<IUrlValidator, UrlValidator>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
