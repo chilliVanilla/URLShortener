@@ -24,17 +24,12 @@ namespace URLShortener.Migrations
 
             modelBuilder.Entity("URLShortener.Models.ShortLink", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.Property<string>("Code")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int>("ClickCount")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
 
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
@@ -44,7 +39,7 @@ namespace URLShortener.Migrations
                         .HasMaxLength(2048)
                         .HasColumnType("character varying(2048)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Code");
 
                     b.HasIndex("Code")
                         .IsUnique();

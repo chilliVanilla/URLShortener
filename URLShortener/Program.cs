@@ -9,6 +9,9 @@ var connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddSingleton<ICodeGenerator, CodeGenerator>();
 builder.Services.AddScoped<IUrlValidator, UrlValidator>();
+builder.Services.AddScoped<IShortLinkService, ShortLinkService>();
+//TODO: Register the short link service and close this gap above this line
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -27,7 +30,7 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "URLShortener V1");
     });
 }
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 // app.UseAuthorization();
 app.MapControllers();
 app.Run();

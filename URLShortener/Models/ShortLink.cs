@@ -1,8 +1,11 @@
-﻿namespace URLShortener.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace URLShortener.Models;
 
 public class ShortLink
 {
-    public Guid Id { get; set; }
+    [Key]
+    [MaxLength(7)]
     public required string Code { get; set; }
     public required string OriginalUrl { get; set; }
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
