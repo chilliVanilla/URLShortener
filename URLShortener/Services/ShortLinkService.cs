@@ -1,4 +1,6 @@
 ﻿// using System.Data.Entity;
+
+using Microsoft.EntityFrameworkCore;
 using URLShortener.Data;
 using URLShortener.DTOs;
 using URLShortener.Interfaces;
@@ -87,9 +89,23 @@ public class ShortLinkService:IShortLinkService
         return uri;
     }
 
-    public Task<string?> GetOriginalUrlAsync(string code, CancellationToken ct)
+    public async Task<string?> GetOriginalUrlAsync(string code, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        Console.WriteLine("In the desired method");
+        if (string.IsNullOrWhiteSpace(code))
+        {
+            Console.WriteLine("Code was null???");
+            return null;
+        }
+
+        var link = await _dbContext.ShortLinks
+            .FirstOrDefaultAsync(x => x.Code == code, ct);
+        if (link is null)
+        {
+            Console.WriteLine("The link entity is null in the GetOriginalUrlAsync method!!!");
+            return null;
+        }
+        return link.OriginalUrl;
     }
     
 }

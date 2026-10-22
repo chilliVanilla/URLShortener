@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using URLShortener.DTOs;
 using URLShortener.Interfaces;
-// using URLShortener.Models;
-// using URLShortener.Services;
 
 namespace URLShortener.Controllers;
 
@@ -14,8 +12,7 @@ public class RedirectController:ControllerBase
     // private readonly IUrlValidator _urlValidator;
     private readonly IShortLinkService _shortLinkService; 
 
-    public RedirectController(
-        IShortLinkService shortLinkService)
+    public RedirectController(IShortLinkService shortLinkService)
     {
         // _codeGenerator = codeGenerator;
         // _urlValidator = urlValidator;
@@ -42,23 +39,18 @@ public class RedirectController:ControllerBase
         }
     }
 
-    // [HttpGet("Code_Generator")]
-    // public IActionResult CodeGenerator()
-    // {
-    //     var code = _codeGenerator.Generate();
-    //     Console.WriteLine("The generated code:" + code);
-    //     return Ok(code);
-    // }
+    [HttpGet("/Long Url")]
+    public async Task<IActionResult> Get(string code, CancellationToken ct)
+    {
+        var link = await _shortLinkService.GetOriginalUrlAsync(code, ct);
 
-    // [HttpGet("Valid Url Checker")]
-    // public IActionResult UrlBoolTest(string? link)
-    // {
-    //     var result = _urlValidator.IsValidUrl(link);
-    //     if (result == true)
-    //     {
-    //         return Ok("Url '" + link + "' is valid !!!");
-    //     }
-    //
-    //     return BadRequest("Url is not valid!!!");
-    // }
+        if (link is null)
+        {
+            return BadRequest("Code does not exist!!!");
+        }
+        //This returns a 301 - which is a permanent redirect
+        return RedirectPermanent(link);
+        
+        //Redirect(link) returns a 302, which is a temporary redirect
+    }
 }

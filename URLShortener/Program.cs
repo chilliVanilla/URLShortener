@@ -30,7 +30,7 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "URLShortener V1");
     });
 }
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 // app.UseAuthorization();
 app.MapControllers();
 app.Run();
