@@ -91,10 +91,10 @@ public class ShortLinkService:IShortLinkService
 
     public async Task<string?> GetOriginalUrlAsync(string code, CancellationToken ct)
     {
-        Console.WriteLine("In the desired method");
+        Console.WriteLine("In the desired method------------------------------------------");
         if (string.IsNullOrWhiteSpace(code))
         {
-            Console.WriteLine("Code was null???");
+            Console.WriteLine("Code was null???--------------------------------------------");
             return null;
         }
 
@@ -105,6 +105,8 @@ public class ShortLinkService:IShortLinkService
             Console.WriteLine("The link entity is null in the GetOriginalUrlAsync method!!!");
             return null;
         }
+
+        Console.WriteLine("Link found------------------------------------------------");
         return link.OriginalUrl;
     }
     

@@ -15,8 +15,14 @@ builder.Services.AddScoped<IShortLinkService, ShortLinkService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => 
-options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseNpgsql(connectionString);
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableSensitiveDataLogging();
+    }
+});
 
 
 var app = builder.Build();

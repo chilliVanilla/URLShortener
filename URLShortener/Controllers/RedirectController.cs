@@ -19,7 +19,6 @@ public class RedirectController:ControllerBase
         _shortLinkService = shortLinkService;
     }
     
-    // [HttpGet("/{code}")]
     [HttpPost("/Create")]
     public async Task<IActionResult> Create(string longUrl, CancellationToken ct)
     {
@@ -39,16 +38,17 @@ public class RedirectController:ControllerBase
         }
     }
 
-    [HttpGet("/Long Url")]
+    [HttpGet("/{code}")]
     public async Task<IActionResult> Get(string code, CancellationToken ct)
     {
         var link = await _shortLinkService.GetOriginalUrlAsync(code, ct);
 
         if (link is null)
         {
-            return BadRequest("Code does not exist!!!");
+            return NotFound("Code does not exist!!!");
         }
         //This returns a 301 - which is a permanent redirect
+        Console.WriteLine("Redirecting....................-----------------------------");
         return RedirectPermanent(link);
         
         //Redirect(link) returns a 302, which is a temporary redirect
